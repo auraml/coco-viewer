@@ -47,20 +47,21 @@ parser.add_argument(
 class Data:
     """Handles data related stuff."""
 
-    def __init__(self, image_dir, annotations_file):
+    def __init__(self, image_dir, annotations_file,randomize=False):
         self.image_dir = image_dir
         self.single_file = None
         instances, images, categories = parse_coco(annotations_file)
 
         if os.path.isfile(image_dir):
+            self.image_dir = os.path.dirname(image_dir)
             self.single_file = os.path.basename(image_dir)
-            self.images = [
+            images = [
                 (first, second)
                 for first, second in images
                 if second == self.single_file
             ]
         self.instances = instances
-        self.images = ImageList(images)  # NOTE: image list is based on annotations file
+        self.images = ImageList(images,randomize)  # NOTE: image list is based on annotations file
         self.categories = categories  # Dataset categories
 
         # Prepare the very first image
@@ -976,7 +977,7 @@ def main():
         root.destroy()
         return
 
-    data = Data(args.images, args.annotations)
+    data = Data(args.images, args.annotations,args.randomize)
     statusbar = StatusBar(root)
     sliders = SlidersBar(root)
     objects_panel = ObjectsPanel(root)
