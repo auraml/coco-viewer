@@ -38,7 +38,7 @@ optional arguments:
   -h, --help                    show this help message and exit
   -i PATH, --images PATH        path to images folder or optionally to single image 
   -a PATH, --annotations PATH   path to annotations json file
-  -r to randomize order images in a dataset
+  -r to randomize order of images in a dataset
 ```
 
 ## Example:
